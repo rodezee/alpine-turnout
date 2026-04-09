@@ -69,6 +69,8 @@ Wrap your sections in a `main` tag (or any container) and use the `x-route` dire
 
 ```
 
+[Go Here](https://alpine-turnout.netlify.app) for a more extensive live example!
+
 ### 2. Navigation
 
 Turnout automatically intercepts any internal `<a>` links. You can also navigate programmatically:
