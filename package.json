@@ -10,6 +10,7 @@
   "version": "1.0.0",
   "description": "AlpineJS Turnout Switch",
   "main": "alpine-turnout.js",
+  "unpkg": "alpine-turnout.js",
   "scripts": {
     "dev": "vite",
     "test": "vitest"
