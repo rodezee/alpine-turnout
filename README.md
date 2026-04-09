@@ -1,7 +1,11 @@
 
-# 🛤️ Alpine Turnout
+<p align="center">
+  <img src="data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='20' y='0' width='8' height='100' fill='%234A5568'/%3E%3Crect x='72' y='0' width='8' height='100' fill='%234A5568'/%3E%3Crect x='15' y='10' width='70' height='4' rx='1' fill='%23718096'/%3E%3Crect x='15' y='30' width='75' height='4' rx='1' fill='%23718096'/%3E%3Crect x='15' y='50' width='80' height='4' rx='1' fill='%23718096'/%3E%3Crect x='15' y='70' width='50' height='4' rx='1' fill='%23718096'/%3E%3Crect x='15' y='90' width='30' height='4' rx='1' fill='%23718096'/%3E%3Cpath d='M72 0 C 72 40, 20 70, 20 100' stroke='%234A5568' stroke-width='8' fill='none'/%3E%3Ccircle cx='72' cy='35' r='5' fill='%23E53E3E'/%3E%3C/svg%3E" width="120" alt="Alpine Turnout Logo">
+</p>
 
-A lightweight, persistent "Tab-style" router for Alpine.js.
+<h1 align="center">Alpine Turnout</h1>
+
+<p align="center">A lightweight, persistent tab-style switch for Alpine.js</p>
 
 Unlike traditional routers that destroy and recreate DOM elements, **Alpine Turnout** treats your routes like railroad tracks. Every section stays in the DOM, preserving its internal state, while the "Turnout" guides the view and URL to the correct destination.
 
