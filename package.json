@@ -1,6 +1,6 @@
 {
   "name": "alpine-turnout",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "AlpineJS Turnout Switch",
   "main": "./dist/alpine-turnout.umd.js",
   "module": "./dist/alpine-turnout.esm.js",

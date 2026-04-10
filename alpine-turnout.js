@@ -7,7 +7,7 @@ document.addEventListener('alpine:init', () => {
 
         init() {
             window.addEventListener('popstate', () => this.update());
-            // Small delay to let directives register before initial check
+            // Small delay to ensure all directives are registered
             setTimeout(() => this.update(), 50);
         },
 
@@ -20,17 +20,15 @@ document.addEventListener('alpine:init', () => {
 
         update() {
             this.path = window.location.pathname;
+            const routes = Array.from(this.registeredRoutes);
             
-            // Check if current path matches any registered route
-            const hasMatch = Array.from(this.registeredRoutes).some(route => {
+            const hasMatch = routes.some(route => {
                 const regex = new RegExp(`^${route.replace(/:(\w+)/g, '(?<$1>[^/]+)')}$`);
                 return this.path.match(regex);
             });
 
-            // If we are at root "/" and it's not explicitly registered, 
-            // but we have other routes, we shouldn't necessarily 404 if the user is just using hashes
-            this.notFound = !hasMatch && this.path !== '/'; 
-            
+            // Feature: Ignore 404 on root if not explicitly registered (Hash support)
+            this.notFound = !hasMatch && this.path !== '/';
             this.handleDefault404();
         },
 
@@ -43,10 +41,10 @@ document.addEventListener('alpine:init', () => {
                     fallbackEl = document.createElement('section');
                     fallbackEl.id = 'alpine-turnout-404';
                     fallbackEl.innerHTML = `
-                        <article style="text-align: center; padding: 2rem;">
-                            <h1>404</h1>
-                            <p>End of the line. This track doesn't lead anywhere.</p>
-                            <a href="/">Back to Station</a>
+                        <article style="text-align: center; padding: 2rem; font-family: sans-serif;">
+                            <h1 style="font-size: 3rem; margin-bottom: 0.5rem;">404</h1>
+                            <p style="color: #64748b;">End of the line. This track doesn't lead anywhere.</p>
+                            <a href="/" style="color: #6366f1; text-decoration: underline; font-weight: bold;">Back to Station</a>
                         </article>`;
                     (document.querySelector('main') || document.body).appendChild(fallbackEl);
                 }
@@ -57,24 +55,6 @@ document.addEventListener('alpine:init', () => {
         }
     });
 
-    // Global intercept for links
-    window.addEventListener('click', (e) => {
-        const link = e.target.closest('a');
-        if (!link) return;
-
-        const href = link.getAttribute('href');
-        
-        // RULES FOR IGNORING:
-        // 1. No href
-        // 2. Starts with # (Fragment/Anchor)
-        // 3. External link (target=_blank)
-        // 4. Doesn't start with / (External or relative to something else)
-        if (!href || href.startsWith('#') || link.target === '_blank' || !href.startsWith('/')) return;
-
-        e.preventDefault();
-        Alpine.store('turnout').go(href);
-    });
-
     Alpine.directive('route', (el, { }, { effect }) => {
         const pathPattern = el.getAttribute('x-route');
         const routeTitle = el.getAttribute('x-title') || "";
@@ -83,11 +63,9 @@ document.addEventListener('alpine:init', () => {
             Alpine.store('turnout').registeredRoutes.add(pathPattern);
         }
 
-        const routeData = Alpine.reactive({ 
-            _active: false 
-        });
-
-        Alpine.addScopeToNode(el, routeData);
+        // Feature Fix: Initialize state immediately to prevent "undefined" errors
+        const state = Alpine.reactive({ _active: false, id: null });
+        Alpine.addScopeToNode(el, state);
 
         if (!el.hasAttribute('x-show')) {
             el.setAttribute('x-show', '_active');
@@ -106,16 +84,31 @@ document.addEventListener('alpine:init', () => {
             }
 
             if (match) {
-                Object.assign(routeData, match.groups);
-                routeData._active = true;
+                state._active = true;
+                // Feature: Dynamic URL param injection (e.g., :id)
+                Object.assign(state, match.groups);
                 
+                // Feature: Dynamic title updates
                 if (routeTitle) {
                     Alpine.store('turnout').title = routeTitle;
                     document.title = routeTitle;
                 }
             } else {
-                routeData._active = false;
+                state._active = false;
             }
         });
+    });
+
+    // Global Click Interceptor
+    window.addEventListener('click', e => {
+        const link = e.target.closest('a');
+        if (!link) return;
+        const href = link.getAttribute('href');
+        
+        // Feature: Hash-Guard + External Link Protection
+        if (!href || href.startsWith('#') || link.target === '_blank' || !href.startsWith('/')) return;
+        
+        e.preventDefault();
+        Alpine.store('turnout').go(href);
     });
 });
