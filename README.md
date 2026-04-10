@@ -1,13 +1,7 @@
 
-<p align="center">
-  <img src="data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='20' y='0' width='8' height='100' fill='%234A5568'/%3E%3Crect x='72' y='0' width='8' height='100' fill='%234A5568'/%3E%3Crect x='15' y='10' width='70' height='4' rx='1' fill='%23718096'/%3E%3Crect x='15' y='30' width='75' height='4' rx='1' fill='%23718096'/%3E%3Crect x='15' y='50' width='80' height='4' rx='1' fill='%23718096'/%3E%3Crect x='15' y='70' width='50' height='4' rx='1' fill='%23718096'/%3E%3Crect x='15' y='90' width='30' height='4' rx='1' fill='%23718096'/%3E%3Cpath d='M72 0 C 72 40, 20 70, 20 100' stroke='%234A5568' stroke-width='8' fill='none'/%3E%3Ccircle cx='72' cy='35' r='5' fill='%23E53E3E'/%3E%3C/svg%3E" width="120" alt="Alpine Turnout Logo">
-</p>
+# ![Alpine Turnout Logo](data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='20' y='0' width='8' height='100' fill='%234A5568'/%3E%3Crect x='72' y='0' width='8' height='100' fill='%234A5568'/%3E%3Crect x='15' y='10' width='70' height='4' rx='1' fill='%23718096'/%3E%3Crect x='15' y='30' width='75' height='4' rx='1' fill='%23718096'/%3E%3Crect x='15' y='50' width='80' height='4' rx='1' fill='%23718096'/%3E%3Crect x='15' y='70' width='50' height='4' rx='1' fill='%23718096'/%3E%3Crect x='15' y='90' width='30' height='4' rx='1' fill='%23718096'/%3E%3Cpath d='M72 0 C 72 40, 20 70, 20 100' stroke='%234A5568' stroke-width='8' fill='none'/%3E%3Ccircle cx='72' cy='35' r='5' fill='%23E53E3E'/%3E%3C/svg%3E) Alpine Turnout
 
-<h1 align="center">Alpine Turnout</h1>
-
-<p align="center">A lightweight, persistent tab-style switch for Alpine.js</p>
-
-# <img src="data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='20' y='0' width='8' height='100' fill='%234A5568'/%3E%3Crect x='72' y='0' width='8' height='100' fill='%234A5568'/%3E%3Crect x='15' y='10' width='70' height='4' rx='1' fill='%23718096'/%3E%3Crect x='15' y='30' width='75' height='4' rx='1' fill='%23718096'/%3E%3Crect x='15' y='50' width='80' height='4' rx='1' fill='%23718096'/%3E%3Crect x='15' y='70' width='50' height='4' rx='1' fill='%23718096'/%3E%3Crect x='15' y='90' width='30' height='4' rx='1' fill='%23718096'/%3E%3Cpath d='M72 0 C 72 40, 20 70, 20 100' stroke='%234A5568' stroke-width='8' fill='none'/%3E%3Ccircle cx='72' cy='35' r='5' fill='%23E53E3E'/%3E%3C/svg%3E" width="40" vertical-align="middle"> Alpine Turnout
+## A lightweight, persistent tab-style switch for Alpine.js
 
 Unlike traditional routers that destroy and recreate DOM elements, **Alpine Turnout** treats your routes like railroad tracks. Every section stays in the DOM, preserving its internal state, while the "Turnout" guides the view and URL to the correct destination.
 
@@ -23,7 +17,6 @@ Unlike traditional routers that destroy and recreate DOM elements, **Alpine Turn
     
 -   **Zero-Config 404:** Handles "end of the line" paths automatically.
     
-
 ----------
 
 ## Installation
@@ -98,42 +91,18 @@ When you define an `x-route`, Alpine Turnout does three things:
     
 3.  **Manages Visibility:** Uses `x-show` logic under the hood. When the URL matches, the track becomes visible; otherwise, it is hidden with `display: none`.
     
-
 ----------
 
 ## API Reference
 
 ### Global Store: `$store.turnout`
 
-Property
-
-Type
-
-Description  
-
-`path`
-
-`String`
-
-The current URL pathname.  
-
-`title`
-
-`String`
-
-The value of `x-title` for the active route.  
-
-`notFound`
-
-`Boolean`
-
-True if the current path matches no registered routes.  
-
-`go(path)`
-
-`Function`
-
-Programmatically navigate to a new track.  
+Property | Type | Description
+ --- | --- | ---
+`path` | `String` | The current URL pathname.
+`title` | `String` | The value of `x-title` for the active route.
+`notFound` | `Boolean` | True if the current path matches no registered routes.
+`go(path)` | `Function` | Programmatically navigate to a new track.
 
 ### Directive: `x-route`
 
@@ -145,7 +114,6 @@ Used on a `div` or `section` to define a track.
     
 -   **Wildcard (Custom 404):** `x-route="*"`
     
-
 ----------
 
 ## Default 404 Behavior
@@ -173,38 +141,15 @@ HTML
 
 ## Comparison with alpine-router
 
-Feature
-
-alpine-router
-
-**alpine-turnout**
-
-**DOM Logic**
-
-Destroys/Creates
-
-Hides/Shows (**Persistent**)
-
-**State**
-
-Reset on nav
-
-Preserved (Forms/Input)
-
-**Performance**
-
-Lower Memory
-
-Faster Switching
-
-**Best For**
-
-Massive apps
-
-One-pagers & Dashboards
-    
+Subject | alpine-router | **alpine-turnout**
+ --- | --- | ---
+**DOM Logic** | Destroys/Creates | Hides/Shows (**Persistent**)
+**State** | Reset on nav | Preserved (Forms/Input) |
+**Performance** | Lower Memory | Faster Switching
+**Best For** | Massive apps | One-pagers & Dashboards
 
 ----------
+
 ## 🚀 Deployment
 
 Since this is a Single Page Application (SPA) using the `History API`, your web server must be configured to serve `index.html` for all requests that don't match a static file.
@@ -219,7 +164,8 @@ location / {
 ```
 
 ### Example for Netlify:
-Simply include a file in the root of your repository, named: `netlify.toml`
+
+Simply include a file named `netlify.toml` in the publish directory of your repository:
 ```
 [[redirects]]
   from = "/*"
@@ -227,9 +173,7 @@ Simply include a file in the root of your repository, named: `netlify.toml`
   status = 200
 
 ```
-
 ----------
-
 
 ## 🧪 Testing
 
