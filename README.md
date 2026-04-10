@@ -119,9 +119,11 @@ Create a `nice` layout in `html`. Then use the `x-route` and `x-title` directive
 </html>
 ```
 
-[Go Here](https://alpine-turnout.netlify.app) for a more extensive live example!
+- [Go Here](https://alpine-turnout.netlify.app) for a more `extensive` live example!
 
-[Go Here](https://github.com/rodezee/alpine-turnout/tree/main/examples) and check out our `/examples/*` directory for more. 
+- [Go Here](https://m-bassy.netlify.app) for a more functional `note app` live example!
+
+- [Go Here](https://github.com/rodezee/alpine-turnout/tree/main/examples) and check out our `/examples/*` directory for more.
 
 ### 2. Navigation
 
