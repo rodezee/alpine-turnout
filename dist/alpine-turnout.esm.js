@@ -15,15 +15,17 @@ document.addEventListener("alpine:init", () => {
 			this.path = window.location.pathname, this.notFound = !Array.from(this.registeredRoutes).some((e) => {
 				let t = RegExp(`^${e.replace(/:(\w+)/g, "(?<$1>[^/]+)")}$`);
 				return this.path.match(t);
-			}), this.handleDefault404();
+			}) && this.path !== "/", this.handleDefault404();
 		},
 		handleDefault404() {
 			let e = document.getElementById("alpine-turnout-404"), t = document.querySelector("[x-route=\"*\"]");
-			this.notFound && !t ? (e || (e = document.createElement("section"), e.id = "alpine-turnout-404", e.innerHTML = "\n                        <article style=\"text-align: center;\">\n                            <h1>404</h1>\n                            <p>End of the line. This track doesn't lead anywhere.</p>\n                            <a href=\"/\">Back to Station</a>\n                        </article>", (document.querySelector("main") || document.body).appendChild(e)), this.title = "Not Found") : e && e.remove();
+			this.notFound && !t ? (e || (e = document.createElement("section"), e.id = "alpine-turnout-404", e.innerHTML = "\n                        <article style=\"text-align: center; padding: 2rem;\">\n                            <h1>404</h1>\n                            <p>End of the line. This track doesn't lead anywhere.</p>\n                            <a href=\"/\">Back to Station</a>\n                        </article>", (document.querySelector("main") || document.body).appendChild(e)), this.title = "Not Found") : e && e.remove();
 		}
 	}), window.addEventListener("click", (e) => {
 		let t = e.target.closest("a");
-		!t || !t.getAttribute("href")?.startsWith("/") || t.target === "_blank" || (e.preventDefault(), Alpine.store("turnout").go(t.getAttribute("href")));
+		if (!t) return;
+		let n = t.getAttribute("href");
+		!n || n.startsWith("#") || t.target === "_blank" || !n.startsWith("/") || (e.preventDefault(), Alpine.store("turnout").go(n));
 	}), Alpine.directive("route", (e, {}, { effect: t }) => {
 		let n = e.getAttribute("x-route"), r = e.getAttribute("x-title") || "";
 		n !== "*" && Alpine.store("turnout").registeredRoutes.add(n);

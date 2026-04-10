@@ -20,11 +20,17 @@ document.addEventListener('alpine:init', () => {
 
         update() {
             this.path = window.location.pathname;
+            
+            // Check if current path matches any registered route
             const hasMatch = Array.from(this.registeredRoutes).some(route => {
                 const regex = new RegExp(`^${route.replace(/:(\w+)/g, '(?<$1>[^/]+)')}$`);
                 return this.path.match(regex);
             });
-            this.notFound = !hasMatch;
+
+            // If we are at root "/" and it's not explicitly registered, 
+            // but we have other routes, we shouldn't necessarily 404 if the user is just using hashes
+            this.notFound = !hasMatch && this.path !== '/'; 
+            
             this.handleDefault404();
         },
 
@@ -37,7 +43,7 @@ document.addEventListener('alpine:init', () => {
                     fallbackEl = document.createElement('section');
                     fallbackEl.id = 'alpine-turnout-404';
                     fallbackEl.innerHTML = `
-                        <article style="text-align: center;">
+                        <article style="text-align: center; padding: 2rem;">
                             <h1>404</h1>
                             <p>End of the line. This track doesn't lead anywhere.</p>
                             <a href="/">Back to Station</a>
@@ -54,9 +60,19 @@ document.addEventListener('alpine:init', () => {
     // Global intercept for links
     window.addEventListener('click', (e) => {
         const link = e.target.closest('a');
-        if (!link || !link.getAttribute('href')?.startsWith('/') || link.target === '_blank') return;
+        if (!link) return;
+
+        const href = link.getAttribute('href');
+        
+        // RULES FOR IGNORING:
+        // 1. No href
+        // 2. Starts with # (Fragment/Anchor)
+        // 3. External link (target=_blank)
+        // 4. Doesn't start with / (External or relative to something else)
+        if (!href || href.startsWith('#') || link.target === '_blank' || !href.startsWith('/')) return;
+
         e.preventDefault();
-        Alpine.store('turnout').go(link.getAttribute('href'));
+        Alpine.store('turnout').go(href);
     });
 
     Alpine.directive('route', (el, { }, { effect }) => {
@@ -71,7 +87,6 @@ document.addEventListener('alpine:init', () => {
             _active: false 
         });
 
-        // Injects reactive scope so x-text and x-show work
         Alpine.addScopeToNode(el, routeData);
 
         if (!el.hasAttribute('x-show')) {
