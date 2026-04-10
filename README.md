@@ -8,15 +8,19 @@ Unlike traditional routers that destroy and recreate DOM elements, **Alpine Turn
 
 ## Why Turnout?
 
+-   **Zero-Config:** just setup your `html` layout like normally and use the `x-route` attribute to declare the routes.
+
 -   **Persistence:** Forms, scroll positions, and component data are preserved when navigating away and back.
     
 -   **Instant Switching:** No re-mounting or re-fetching logic on every click.
     
--   **Alpine-Native:** Uses a global store and a single directive.
+-   **Alpine-Native:** Uses a global store and works with a single directive.
     
 -   **Transitions:** Works seamlessly with Alpine's `x-transition`.
-    
--   **Zero-Config 404:** Handles "end of the line" paths automatically.
+
+-   **Super Small** The alpine-turnout code is only 2.00 kB (gzip: 0.94 kB)
+
+-   **SEO Proof:** All your content gets indexed by the popular search engines like `Google`, `DuckDuckGo` etc.
     
 ----------
 
@@ -38,14 +42,29 @@ Include the script before Alpine.js:
 npm install alpine-turnout
 
 ```
+And [initialize](https://alpinejs.dev/essentials/installation#as-a-module) AlpineJS and Alpine Turnout as a module within your code.
 
+```javascript
+import Alpine from 'alpinejs';
+import 'alpine-turnout'; // This auto-registers the $store.turnout
+
+window.Alpine = Alpine;
+Alpine.start();
+```
+
+Or if you prefer UMD, put this in the head of your index.html:
+
+```html
+<script src="./node_modules/alpine-turnout/dist/alpine-turnout.umd.js" defer></script>
+<script src="./node_modules/alpinejs/dist/cdn.min.js" defer></script>
+```
 ----------
 
 ## Usage
 
-### 1. Define your Tracks
+### 1. Define your Routes
 
-Create a `nice` layout in `html` and use the `x-route` directive.
+Create a `nice` layout in `html`. Then use the `x-route` and `x-title` directives:
 
 ```html
 <!doctype html>
@@ -96,7 +115,7 @@ Create a `nice` layout in `html` and use the `x-route` directive.
 
 ### 2. Navigation
 
-Turnout automatically intercepts any internal `<a>` links. You can also navigate programmatically:
+Turnout automatically intercepts any internal `<a href="/user/john">Visit John</a>` links. You can also navigate programmatically:
 
 ```html
 <button @click="$store.turnout.go('/user/john')">Visit John</button>
@@ -150,9 +169,7 @@ If no `x-route="*"` is found and the user hits an unregistered path, Turnout aut
 
 Because Turnout uses Alpine's visibility toggling, you can use standard transitions. Note that we recommend setting a `leave.duration.0ms` if you want the "old" page to disappear instantly while the new one fades in.
 
-HTML
-
-```
+```html
 <div x-route="/fast" 
      x-transition.duration.500ms 
      x-transition:leave.duration.0ms>
@@ -163,20 +180,30 @@ HTML
 
 ----------
 
-## Comparison with alpine-router
+## Comparison with alpine-router(s)
 
-Subject | alpine-router | **alpine-turnout**
+Subject | alpine-router(s) | **alpine-turnout**
  --- | --- | ---
 **DOM Logic** | Destroys/Creates | Hides/Shows (**Persistent**)
-**State** | Reset on nav | Preserved (Forms/Input) |
+**State** | Reset on nav | Preserved (Forms/Input)
 **Performance** | Lower Memory | Faster Switching
 **Best For** | Massive apps | One-pagers & Dashboards
 
 ----------
 
+## SEO Proof
+
+Most modern routers (React Router, Vue Router) are "empty" until JavaScript runs. Bots often see a blank page on the first pass.  
+
+Alpine Turnout’s Edge: Since all your "tracks" (the divs with x-route) are physically present in your HTML file, a crawler like Googlebot sees all your content immediately when it reads the source code.  
+
+The Result: Your internal pages are indexed much more easily than with a standard SPA.  
+
+----------
+
 ## 🚀 Deployment
 
-Since this is a Single Page Application (SPA) using the `History API`, your web server must be configured to serve `index.html` for all requests that don't match a static file.
+Since this is a Single Page Application (SPA) using the `History API`, your web server should be configured to serve `index.html` for all requests that don't match a static file.
 
 ### Example for Nginx:
 
@@ -197,6 +224,7 @@ Simply include a file named `netlify.toml` in the publish directory of your repo
   status = 200
 
 ```
+
 ----------
 
 ## 🧪 Testing
@@ -213,17 +241,23 @@ npm test
 
 ```
 
-### Example Test Case
+### Test Cases
 
-Our suite covers:
+Our suite covers the following test cases:
 
--   Initial render of the Home route.
-    
--   Navigation to parameterized routes (extracting `:name`).
-    
--   DOM cleanup (ensuring the old route is removed).
-    
--   404 fallback logic.
+- initializes and shows the home route by default
+
+- navigates to a parameterized track and updates the view
+
+- updates parameters reactively without re-mounting the element
+
+- renders a 404 terminal when a track is not found
+
+- persists state (like attributes or input) when switching tracks
+
+- intercepts internal links and prevents default behavior
+
+- ignores external links and allows standard navigation
 
 ----------
 
