@@ -1,7 +1,6 @@
+# Alpine Turnout
 
 ![Alpine Turnout Logo](https://alpine-turnout.netlify.app/alpine-turnout.png)
-
-# Alpine Turnout
 
 ## A lightweight, persistent tab-style switch for Alpine.js
 
