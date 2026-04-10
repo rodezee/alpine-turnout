@@ -38,11 +38,14 @@ Include the script before Alpine.js:
 
 ### Via NPM
 
+Install Alpine Turnout:
+
 ```bash
 npm install alpine-turnout
 
 ```
-And [initialize](https://alpinejs.dev/essentials/installation#as-a-module) AlpineJS and Alpine Turnout as a module within your code.
+
+[Initialize](https://alpinejs.dev/essentials/installation#as-a-module) AlpineJS and Alpine Turnout as a module within your code:
 
 ```javascript
 import Alpine from 'alpinejs';
@@ -51,6 +54,13 @@ import 'alpine-turnout'; // This auto-registers the $store.turnout
 window.Alpine = Alpine;
 Alpine.start();
 ```
+
+Then launch your dev environment with vite:
+
+```bash
+npx vite
+```
+
 
 Or if you prefer UMD, put this in the head of your index.html:
 
