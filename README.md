@@ -1,5 +1,5 @@
 
-![Alpine Turnout Logo](https://github.com/rodezee/alpine-turnout/blob/main/alpine-turnout.png?raw=true)
+![Alpine Turnout Logo](https://alpine-turnout.netlify.app/alpine-turnout.png)
 
 # Alpine Turnout
 
