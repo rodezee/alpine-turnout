@@ -47,7 +47,7 @@ npm install alpine-turnout
 
 [Initialize](https://alpinejs.dev/essentials/installation#as-a-module) AlpineJS and Alpine Turnout as a module within your code:
 
-```javascript
+```js
 import Alpine from 'alpinejs';
 import 'alpine-turnout'; // This auto-registers the $store.turnout
 
@@ -273,4 +273,4 @@ Our suite covers the following test cases:
 
 ## ⚖️ License
 
-MIT © [biensurerodezee@protonmail.com]
+MIT © [Github](https://github.com/rodezee/alpine-turnout) [NPM](https://www.npmjs.com/package/alpine-turnout)
