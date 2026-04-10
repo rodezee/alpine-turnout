@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Alpine Turnout 404</title>
+    <script src="//unpkg.com/alpine-turnout" defer></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <link rel="stylesheet" href="//unpkg.com/@picocss/pico">
+</head>
+<body class="container" x-data="{}">
+
+    <h1 x-data x-text="$store.turnout.title"></h1>
+
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/broken-link">404 test</a></li>
+        </ul>
+    </nav>
+
+    <article>
+        <div x-route="/" x-title="Welcome Home" x-transition>
+            <p>This is the homepage.</p>
+        </div>
+
+        <div x-route="/user/:name" x-title="User Profile" x-transition>
+            <p>Hello, <strong x-text="name"></strong>!</p>
+        </div>
+
+        <div x-route="*" x-title="Custom 404 Page" x-transition>
+            <div>
+                This is a customized 404 page!
+            </div>
+        </div>
+    </article>
+
+</body>
+</html>

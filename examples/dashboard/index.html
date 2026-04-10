@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Alpine Turnout Dashboard</title>
+    <script src="//unpkg.com/alpine-turnout" defer></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <link rel="stylesheet" href="//unpkg.com/@picocss/pico">
+</head>
+<body class="container" x-data="{}">
+
+    <h1 x-data x-text="$store.turnout.title"></h1>
+
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/search">Search</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
+        </ul>
+    </nav>
+
+    <article>
+        <div x-route="/" x-title="Welcome Home" x-transition>
+            <p>This is the homepage.</p>
+        </div>
+
+        <div x-route="/search" x-title="Search" x-transition>
+            <div x-data="{ query: '' }">
+                <input type="text" x-model="query" placeholder="Type here...">
+                <p>Your input is preserved even if you switch tabs!</p>
+            </div>
+        </div>
+        
+        <div x-route="/dashboard" x-title="Control Center" x-transition>
+            <div class="grid">
+                <article x-data="{ count: 0, timer: null }" 
+                         x-init="timer = setInterval(() => count++, 1000)">
+                    <header>Active Session</header>
+                    <h2 x-text="count + 's'"></h2>
+                    <p>This timer never resets, even if you go to Home and back!</p>
+                </article>
+
+                <article>
+                    <header>Quick Settings</header>
+                    <label>
+                        <input type="checkbox" role="switch" checked>
+                        Dark Mode Enabled
+                    </label>
+                    <label>
+                        <input type="checkbox" role="switch">
+                        Notifications
+                    </label>
+                    <footer>
+                        <small>State is preserved automatically.</small>
+                    </footer>
+                </article>
+            </div>
+        </div>
+    </article>
+
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Alpine Turnout Shop</title>
+    <script src="//unpkg.com/alpine-turnout" defer></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <link rel="stylesheet" href="//unpkg.com/@picocss/pico">
+</head>
+<body class="container" x-data="{}">
+
+    <h1 x-data x-text="$store.turnout.title"></h1>
+
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/search">Search</a></li>
+            <li><a href="/products">Shop</a></li>
+            <li><a href="/products/1">Product 1</a></li>
+        </ul>
+    </nav>
+
+    <article>
+        <div x-route="/" x-title="Welcome Home" x-transition>
+            <p>This is the homepage.</p>
+        </div>
+
+        <div x-route="/search" x-title="Search" x-transition>
+            <div x-data="{ query: '' }">
+                <input type="text" x-model="query" placeholder="Type here...">
+                <p>Your input is preserved even if you switch tabs!</p>
+            </div>
+        </div>
+
+        <div x-route="/products" x-title="Shop" x-transition>
+            <div class="grid">
+                <article>
+                    <img src="https://placehold.co/400x300?text=Product+1" alt="Item 1">
+                    <p>Industrial Switch #1</p>
+                    <a href="/products/1" role="button" class="secondary">View Details</a>
+                </article>
+                <article>
+                    <img src="https://placehold.co/400x300?text=Product+2" alt="Item 2">
+                    <p>Heavy Duty Rail #2</p>
+                    <a href="/products/2" role="button" class="secondary">View Details</a>
+                </article>
+            </div>
+        </div>
+
+        <div x-route="/products/:id" x-title="Product Details" x-transition>
+            <article x-data>
+                <nav aria-label="breadcrumb">
+                  <ul>
+                    <li><a href="/products">Products</a></li>
+                    <li x-text="'Item ' + id"></li>
+                  </ul>
+                </nav>
+                <div class="grid">
+                    <img :src="'https://placehold.co/600x400?text=Viewing+Product+' + id" style="border-radius: 8px;">
+                    <div>
+                        <h2 x-text="'Product #' + id"></h2>
+                        <p>This page demonstrates how parameters are injected into the scope.</p>
+                        <button @click="alert('Added ' + id + ' to cart!')">Add to Cart</button>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </article>
+
+</body>
+</html>

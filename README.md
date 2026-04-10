@@ -45,31 +45,54 @@ npm install alpine-turnout
 
 ### 1. Define your Tracks
 
-Wrap your sections in a `main` tag (or any container) and use the `x-route` directive.
+Create a `nice` layout in `html` and use the `x-route` directive.
 
 ```html
-<h1 x-data x-text="$store.turnout.title"></h1>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Alpine Turnout</title>
+    <script src="//unpkg.com/alpine-turnout" defer></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <link rel="stylesheet" href="//unpkg.com/@picocss/pico">
+</head>
+<body class="container" x-data="{}">
 
-<main>
-    <div x-route="/" x-title="Welcome Home" x-transition>
-        <p>This is the homepage.</p>
-    </div>
+    <h1 x-data x-text="$store.turnout.title"></h1>
 
-    <div x-route="/user/:name" x-title="User Profile" x-transition>
-        <p>Hello, <strong x-text="name"></strong>!</p>
-    </div>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/user/john">Profile</a></li>
+            <li><a href="/search">Search</a></li>
+        </ul>
+    </nav>
 
-    <div x-route="/search" x-title="Search" x-transition>
-        <article x-data="{ query: '' }">
-            <input type="text" x-model="query" placeholder="Type here...">
-            <p>Your input is preserved even if you switch tabs!</p>
-        </article>
-    </div>
-</main>
+    <article>
+        <div x-route="/" x-title="Welcome Home" x-transition>
+            <p>This is the homepage.</p>
+        </div>
 
+        <div x-route="/user/:name" x-title="User Profile" x-transition>
+            <p>Hello, <strong x-text="name"></strong>!</p>
+        </div>
+
+        <div x-route="/search" x-title="Search" x-transition>
+            <div x-data="{ query: '' }">
+                <input type="text" x-model="query" placeholder="Type here...">
+                <p>Your input is preserved even if you switch tabs!</p>
+            </div>
+        </div>
+    </article>
+
+</body>
+</html>
 ```
 
 [Go Here](https://alpine-turnout.netlify.app) for a more extensive live example!
+
+[Go Here](https://github.com/rodezee/alpine-turnout/tree/main/examples) and check out our `/examples/*` directory for more. 
 
 ### 2. Navigation
 

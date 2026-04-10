@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Alpine Turnout Weather</title>
+    <script src="//unpkg.com/alpine-turnout" defer></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <link rel="stylesheet" href="//unpkg.com/@picocss/pico">
+</head>
+<body class="container" x-data="{}">
+
+    <h1 x-data x-text="$store.turnout.title"></h1>
+
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/weather">Weather</a></li>
+        </ul>
+    </nav>
+
+    <article>
+        <div x-route="/" x-title="Welcome Home" x-transition>
+            <p>This is the homepage.</p>
+        </div>
+
+        <div x-route="/weather" 
+             x-title="Live Weather" 
+             x-transition.opacity.duration.1000ms 
+             x-transition:leave.duration.0ms
+             x-effect="if (_active) console.log('Weather route active'); else console.log('Weather route inactive');">
+            <article x-data="{
+                city: '',
+                weather: null,
+                loading: false,
+                async getWeather() {
+                    if (!this.city) return;
+                    this.loading = true;
+                    try {
+                        const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${this.city}&count=1`);
+                        const data = await res.json();
+                        if (!data.results) return;
+                        const { latitude, longitude, name } = data.results[0];
+                        const wRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`);
+                        const wData = await wRes.json();
+                        this.weather = { name, temp: wData.current_weather.temperature };
+                    } finally { this.loading = false; }
+                }
+            }">
+                <input type="text" x-model="city" @keyup.enter="getWeather()" placeholder="Search City">
+                <button x-bind:aria-busy="loading" @click="getWeather()">Search</button>
+                <template x-if="weather">
+                    <h2 x-text="weather.temp + '°C in ' + weather.name"></h2>
+                </template>
+            </article>
+        </div>
+
+</body>
+</html>
