@@ -1,9 +1,17 @@
 /** @vitest-environment jsdom */
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { waitFor } from '@testing-library/dom';
 import Alpine from 'alpinejs';
 // Make sure this matches your filename!
-import './alpine-turnout.js'; 
+import AlpineTurnout from './alpine-turnout.js'; 
+
+beforeAll(() => {
+  // Mock window.scrollTo
+  window.scrollTo = vi.fn()
+
+  // Mock Element.prototype.scrollIntoView
+  window.HTMLElement.prototype.scrollIntoView = vi.fn()
+})
 
 describe('Alpine Turnout (Persistent Tab Router)', () => {
   beforeEach(async () => {
@@ -29,6 +37,7 @@ describe('Alpine Turnout (Persistent Tab Router)', () => {
     // 4. Ensure Alpine is started
     if (!window.AlpineInitialized) {
         window.Alpine = Alpine;
+        Alpine.plugin(AlpineTurnout); // Load Alpine Turnout Plugin
         Alpine.start();
         window.AlpineInitialized = true;
     }

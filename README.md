@@ -43,11 +43,11 @@ Install Alpine Turnout:
 npm install alpine-turnout
 ```
 
-Initialize Alpine.js and Alpine Turnout as a module with the following code:
+Initialize Alpine.js and Alpine Turnout as modules with the following code:
 
 ```js
 import Alpine from 'alpinejs';
-import AlpineTurnout from '/alpine-turnout.js';
+import AlpineTurnout from 'alpine-turnout';
 
 Alpine.plugin(AlpineTurnout);
 Alpine.start();

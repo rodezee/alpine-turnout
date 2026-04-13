@@ -4,7 +4,8 @@ export default function (Alpine) {
         title: '',
         registeredRoutes: new Set(),
         notFound: false,
-        isPopState: false, // Track if navigation is from Back/Forward buttons
+        isPopState: false,
+        scrollCache: {}, // Stores { '/path': scrollY }
 
         init() {
             window.addEventListener('popstate', () => {
@@ -16,8 +17,11 @@ export default function (Alpine) {
 
         go(path) {
             const [cleanPath, hash] = path.split('#');
+            
+            this.scrollCache[this.path] = window.scrollY;
+
             if (this.path !== cleanPath) {
-                this.isPopState = false; // New navigation, scroll to top
+                this.isPopState = false;
                 history.pushState(null, '', path);
                 this.update();
             } else if (hash) {
@@ -26,6 +30,10 @@ export default function (Alpine) {
         },
 
         update() {
+            if (!this.isPopState) {
+                this.scrollCache[this.path] = window.scrollY;
+            }
+
             this.path = window.location.pathname;
             const routes = Array.from(this.registeredRoutes);
             
@@ -41,12 +49,19 @@ export default function (Alpine) {
             
             if (hash) {
                 this.scrollToHash(hash);
-            } else if (!this.isPopState) {
-                // ONLY scroll to top if it's a new link click
-                window.scrollTo(0, 0);
+            } else if (this.isPopState) {
+                // Let the browser handle native back/forward scroll
+            } else {
+                // Return to cached position if it exists, otherwise top
+                const savedScroll = this.scrollCache[this.path] || 0;
+                
+                // We use nextTick to ensure the route is visible before scrolling
+                Alpine.nextTick(() => {
+                    window.scrollTo({ left: 0, top: savedScroll, behavior: 'smooth' });
+                });
             }
 
-            this.isPopState = false; // Reset for next time
+            this.isPopState = false;
         },
 
         scrollToHash(hashId) {

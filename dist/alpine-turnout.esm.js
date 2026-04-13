@@ -6,6 +6,7 @@ function e(e) {
 		registeredRoutes: /* @__PURE__ */ new Set(),
 		notFound: !1,
 		isPopState: !1,
+		scrollCache: {},
 		init() {
 			window.addEventListener("popstate", () => {
 				this.isPopState = !0, this.update();
@@ -13,15 +14,26 @@ function e(e) {
 		},
 		go(e) {
 			let [t, n] = e.split("#");
-			this.path === t ? n && this.scrollToHash(n) : (this.isPopState = !1, history.pushState(null, "", e), this.update());
+			this.scrollCache[this.path] = window.scrollY, this.path === t ? n && this.scrollToHash(n) : (this.isPopState = !1, history.pushState(null, "", e), this.update());
 		},
 		update() {
-			this.path = window.location.pathname, this.notFound = !Array.from(this.registeredRoutes).some((e) => {
+			this.isPopState || (this.scrollCache[this.path] = window.scrollY), this.path = window.location.pathname, this.notFound = !Array.from(this.registeredRoutes).some((e) => {
 				let t = RegExp(`^${e.replace(/:(\w+)/g, "(?<$1>[^/]+)")}$`);
 				return this.path.match(t);
 			}) && this.path !== "/", this.handleDefault404();
-			let e = window.location.hash.replace("#", "");
-			e ? this.scrollToHash(e) : this.isPopState || window.scrollTo(0, 0), this.isPopState = !1;
+			let t = window.location.hash.replace("#", "");
+			if (t) this.scrollToHash(t);
+			else if (!this.isPopState) {
+				let t = this.scrollCache[this.path] || 0;
+				e.nextTick(() => {
+					window.scrollTo({
+						left: 0,
+						top: t,
+						behavior: "smooth"
+					});
+				});
+			}
+			this.isPopState = !1;
 		},
 		scrollToHash(t) {
 			e.nextTick(() => {
