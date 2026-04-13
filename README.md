@@ -8,7 +8,7 @@ Unlike traditional routers that destroy and recreate DOM elements, **Alpine Turn
 
 ## Why Turnout?
 
--   **Zero-Config:** just setup your `html` layout like normally and use the `x-route` attribute to declare the routes.
+-   **Zero-Config:** just setup your `html` layout like normally and use the `x-route` attribute to declare the "tracks".
 
 -   **Persistence:** Forms, scroll positions, and component data are preserved when navigating away and back.
     
@@ -62,7 +62,7 @@ npm run dev
 
 ## Usage
 
-### 1. Define your Routes
+### 1. Define your Tracks(/Routes)
 
 Create a `nice` layout in `html`. Then use the `x-route` and `x-title` directives:
 
@@ -134,7 +134,7 @@ When you define an `x-route`, Alpine Turnout does three things:
     
 2.  **Injects Scope:** Makes route parameters (like `:name`) available directly to the HTML inside that div.
     
-3.  **Manages Visibility:** Uses `x-show` logic under the hood. When the URL matches, the track becomes visible; otherwise, it is hidden with `display: none`.
+3.  **Manages Visibility:** Uses `x-show` logic under the hood. When the URL matches, the "track" becomes visible; otherwise, it is hidden with `display: none`.
     
 ----------
 
@@ -147,11 +147,11 @@ Property | Type | Description
 `path` | `String` | The current URL pathname.
 `title` | `String` | The value of `x-title` for the active route.
 `notFound` | `Boolean` | True if the current path matches no registered routes.
-`go(path)` | `Function` | Programmatically navigate to a new track.
+`go(path)` | `Function` | Programmatically navigate to a new route.
 
 ### Directive: `x-route`
 
-Used on a `div` or `section` to define a track.
+Used on a `div` or `section` to define a "track".
 
 -   **Static Routes:** `x-route="/about"`
     
@@ -243,13 +243,13 @@ Our suite covers the following test cases:
 
 - initializes and shows the home route by default
 
-- navigates to a parameterized track and updates the view
+- navigates to a parameterized "track" and updates the view
 
 - updates parameters reactively without re-mounting the element
 
-- renders a 404 terminal when a track is not found
+- renders a 404 terminal when a "track" is not found
 
-- persists state (like attributes or input) when switching tracks
+- persists state (like attributes or input) when switching "tracks"
 
 - intercepts internal links and prevents default behavior
 
