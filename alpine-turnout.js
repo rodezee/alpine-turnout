@@ -1,20 +1,27 @@
-document.addEventListener('alpine:init', () => {
+export default function (Alpine) {
     Alpine.store('turnout', {
         path: window.location.pathname,
         title: '',
         registeredRoutes: new Set(),
         notFound: false,
+        isPopState: false, // Track if navigation is from Back/Forward buttons
 
         init() {
-            window.addEventListener('popstate', () => this.update());
-            // Small delay to ensure all directives are registered
+            window.addEventListener('popstate', () => {
+                this.isPopState = true;
+                this.update();
+            });
             setTimeout(() => this.update(), 50);
         },
 
         go(path) {
-            if (this.path !== path) {
+            const [cleanPath, hash] = path.split('#');
+            if (this.path !== cleanPath) {
+                this.isPopState = false; // New navigation, scroll to top
                 history.pushState(null, '', path);
                 this.update();
+            } else if (hash) {
+                this.scrollToHash(hash);
             }
         },
 
@@ -27,9 +34,28 @@ document.addEventListener('alpine:init', () => {
                 return this.path.match(regex);
             });
 
-            // Feature: Ignore 404 on root if not explicitly registered (Hash support)
             this.notFound = !hasMatch && this.path !== '/';
             this.handleDefault404();
+
+            const hash = window.location.hash.replace('#', '');
+            
+            if (hash) {
+                this.scrollToHash(hash);
+            } else if (!this.isPopState) {
+                // ONLY scroll to top if it's a new link click
+                window.scrollTo(0, 0);
+            }
+
+            this.isPopState = false; // Reset for next time
+        },
+
+        scrollToHash(hashId) {
+            Alpine.nextTick(() => {
+                const el = document.getElementById(hashId);
+                if (el) {
+                    el.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
         },
 
         handleDefault404() {
@@ -55,6 +81,7 @@ document.addEventListener('alpine:init', () => {
         }
     });
 
+    // 2. Register the Directive
     Alpine.directive('route', (el, { }, { effect }) => {
         const pathPattern = el.getAttribute('x-route');
         const routeTitle = el.getAttribute('x-title') || "";
@@ -63,7 +90,6 @@ document.addEventListener('alpine:init', () => {
             Alpine.store('turnout').registeredRoutes.add(pathPattern);
         }
 
-        // Feature Fix: Initialize state immediately to prevent "undefined" errors
         const state = Alpine.reactive({ _active: false, id: null });
         Alpine.addScopeToNode(el, state);
 
@@ -85,10 +111,8 @@ document.addEventListener('alpine:init', () => {
 
             if (match) {
                 state._active = true;
-                // Feature: Dynamic URL param injection (e.g., :id)
                 Object.assign(state, match.groups);
                 
-                // Feature: Dynamic title updates
                 if (routeTitle) {
                     Alpine.store('turnout').title = routeTitle;
                     document.title = routeTitle;
@@ -99,16 +123,16 @@ document.addEventListener('alpine:init', () => {
         });
     });
 
-    // Global Click Interceptor
+    // 3. Global Click Interceptor
     window.addEventListener('click', e => {
         const link = e.target.closest('a');
         if (!link) return;
         const href = link.getAttribute('href');
-        
-        // Feature: Hash-Guard + External Link Protection
+
+        // Allow external links, blank targets, and simple #hash jumps (without path)
         if (!href || href.startsWith('#') || link.target === '_blank' || !href.startsWith('/')) return;
         
         e.preventDefault();
         Alpine.store('turnout').go(href);
     });
-});
+}

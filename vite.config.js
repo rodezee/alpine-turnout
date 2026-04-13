@@ -1,21 +1,40 @@
-import { defineConfig } from 'vite'
+import { defineConfig, build } from 'vite'
+import { resolve } from 'path'
 
 export default defineConfig({
   build: {
+    emptyOutDir: true,
     lib: {
-      entry: 'alpine-turnout.js',
-      name: 'AlpineTurnout', // Required for UMD
-      fileName: (format) => `alpine-turnout.${format}.js`,
-      formats: ['esm', 'umd'] // Generates both!
+      entry: resolve(__dirname, 'builds/module.js'),
+      formats: ['esm'],
+      fileName: () => `alpine-turnout.esm.js`,
     },
     rollupOptions: {
-      // Make sure to externalize alpine if you don't want to bundle it
       external: ['alpinejs'],
-      output: {
-        globals: {
-          alpinejs: 'Alpine'
-        }
-      }
     }
-  }
+  },
+  plugins: [{
+    name: 'build-cdn',
+    closeBundle: async () => {
+      // Once the first build finishes, we manually trigger the second one
+      await build({
+        configFile: false, // Don't loop back into this config!
+        build: {
+          emptyOutDir: false, // KEEP the ESM file we just made
+          lib: {
+            entry: resolve(__dirname, 'builds/cdn.js'),
+            name: 'AlpineTurnout',
+            formats: ['umd'],
+            fileName: () => `alpine-turnout.min.js`,
+          },
+          rollupOptions: {
+            external: ['alpinejs'],
+            output: {
+              globals: { alpinejs: 'Alpine' }
+            }
+          }
+        }
+      })
+    }
+  }]
 })

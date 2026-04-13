@@ -2,14 +2,14 @@
   "name": "alpine-turnout",
   "version": "1.0.5",
   "description": "AlpineJS Turnout Switch",
-  "main": "./dist/alpine-turnout.umd.js",
+  "main": "./dist/alpine-turnout.min.js",
   "module": "./dist/alpine-turnout.esm.js",
-  "unpkg": "./dist/alpine-turnout.umd.js",
-  "jsdelivr": "./dist/alpine-turnout.umd.js",
+  "unpkg": "./dist/alpine-turnout.min.js",
+  "jsdelivr": "./dist/alpine-turnout.min.js",
   "exports": {
     ".": {
       "import": "./dist/alpine-turnout.esm.js",
-      "require": "./dist/alpine-turnout.umd.js"
+      "require": "./dist/alpine-turnout.min.js"
     }
   },
   "scripts": {
@@ -31,6 +31,11 @@
   ],
   "author": "biensurerodezee@protonmail.com",
   "license": "MIT",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "bugs": {
     "url": "https://github.com/rodezee/alpine-turnout/issues"
   },

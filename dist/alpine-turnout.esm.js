@@ -1,47 +1,63 @@
 //#region alpine-turnout.js
-document.addEventListener("alpine:init", () => {
-	Alpine.store("turnout", {
+function e(e) {
+	e.store("turnout", {
 		path: window.location.pathname,
 		title: "",
 		registeredRoutes: /* @__PURE__ */ new Set(),
 		notFound: !1,
+		isPopState: !1,
 		init() {
-			window.addEventListener("popstate", () => this.update()), setTimeout(() => this.update(), 50);
+			window.addEventListener("popstate", () => {
+				this.isPopState = !0, this.update();
+			}), setTimeout(() => this.update(), 50);
 		},
 		go(e) {
-			this.path !== e && (history.pushState(null, "", e), this.update());
+			let [t, n] = e.split("#");
+			this.path === t ? n && this.scrollToHash(n) : (this.isPopState = !1, history.pushState(null, "", e), this.update());
 		},
 		update() {
 			this.path = window.location.pathname, this.notFound = !Array.from(this.registeredRoutes).some((e) => {
 				let t = RegExp(`^${e.replace(/:(\w+)/g, "(?<$1>[^/]+)")}$`);
 				return this.path.match(t);
 			}) && this.path !== "/", this.handleDefault404();
+			let e = window.location.hash.replace("#", "");
+			e ? this.scrollToHash(e) : this.isPopState || window.scrollTo(0, 0), this.isPopState = !1;
+		},
+		scrollToHash(t) {
+			e.nextTick(() => {
+				let e = document.getElementById(t);
+				e && e.scrollIntoView({ behavior: "smooth" });
+			});
 		},
 		handleDefault404() {
 			let e = document.getElementById("alpine-turnout-404"), t = document.querySelector("[x-route=\"*\"]");
 			this.notFound && !t ? (e || (e = document.createElement("section"), e.id = "alpine-turnout-404", e.innerHTML = "\n                        <article style=\"text-align: center; padding: 2rem; font-family: sans-serif;\">\n                            <h1 style=\"font-size: 3rem; margin-bottom: 0.5rem;\">404</h1>\n                            <p style=\"color: #64748b;\">End of the line. This track doesn't lead anywhere.</p>\n                            <a href=\"/\" style=\"color: #6366f1; text-decoration: underline; font-weight: bold;\">Back to Station</a>\n                        </article>", (document.querySelector("main") || document.body).appendChild(e)), this.title = "Not Found") : e && e.remove();
 		}
-	}), Alpine.directive("route", (e, {}, { effect: t }) => {
-		let n = e.getAttribute("x-route"), r = e.getAttribute("x-title") || "";
-		n !== "*" && Alpine.store("turnout").registeredRoutes.add(n);
-		let i = Alpine.reactive({
+	}), e.directive("route", (t, {}, { effect: n }) => {
+		let r = t.getAttribute("x-route"), i = t.getAttribute("x-title") || "";
+		r !== "*" && e.store("turnout").registeredRoutes.add(r);
+		let a = e.reactive({
 			_active: !1,
 			id: null
 		});
-		Alpine.addScopeToNode(e, i), e.hasAttribute("x-show") || e.setAttribute("x-show", "_active"), t(() => {
-			let e = Alpine.store("turnout").path, t = n === "*", a = null;
-			if (t) Alpine.store("turnout").notFound && (a = { groups: {} });
+		e.addScopeToNode(t, a), t.hasAttribute("x-show") || t.setAttribute("x-show", "_active"), n(() => {
+			let t = e.store("turnout").path, n = r === "*", o = null;
+			if (n) e.store("turnout").notFound && (o = { groups: {} });
 			else {
-				let t = n.replace(/:(\w+)/g, "(?<$1>[^/]+)");
-				a = e.match(RegExp(`^${t}$`));
+				let e = r.replace(/:(\w+)/g, "(?<$1>[^/]+)");
+				o = t.match(RegExp(`^${e}$`));
 			}
-			a ? (i._active = !0, Object.assign(i, a.groups), r && (Alpine.store("turnout").title = r, document.title = r)) : i._active = !1;
+			o ? (a._active = !0, Object.assign(a, o.groups), i && (e.store("turnout").title = i, document.title = i)) : a._active = !1;
 		});
-	}), window.addEventListener("click", (e) => {
-		let t = e.target.closest("a");
-		if (!t) return;
-		let n = t.getAttribute("href");
-		!n || n.startsWith("#") || t.target === "_blank" || !n.startsWith("/") || (e.preventDefault(), Alpine.store("turnout").go(n));
+	}), window.addEventListener("click", (t) => {
+		let n = t.target.closest("a");
+		if (!n) return;
+		let r = n.getAttribute("href");
+		!r || r.startsWith("#") || n.target === "_blank" || !r.startsWith("/") || (t.preventDefault(), e.store("turnout").go(r));
 	});
-});
+}
 //#endregion
+//#region builds/module.js
+var t = e;
+//#endregion
+export { e as AlpineTurnout, t as default };

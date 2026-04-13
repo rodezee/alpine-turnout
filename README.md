@@ -33,40 +33,30 @@ Include the script before Alpine.js:
 ```html
 <script src="https://unpkg.com/alpine-turnout" defer></script>
 <script src="https://unpkg.com/alpinejs" defer></script>
-
 ```
 
-### Via NPM
+### Via NPM module
 
 Install Alpine Turnout:
 
 ```bash
 npm install alpine-turnout
-
 ```
 
-[Initialize](https://alpinejs.dev/essentials/installation#as-a-module) AlpineJS and Alpine Turnout as a module within your code:
+Initialize Alpine.js and Alpine Turnout as a module with the following code:
 
 ```js
 import Alpine from 'alpinejs';
-import 'alpine-turnout'; // This auto-registers the $store.turnout
+import AlpineTurnout from '/alpine-turnout.js';
 
-window.Alpine = Alpine;
+Alpine.plugin(AlpineTurnout);
 Alpine.start();
 ```
 
 Then launch your dev environment with vite:
 
 ```bash
-npx vite
-```
-
-
-Or if you prefer UMD, put this in the head of your index.html:
-
-```html
-<script src="./node_modules/alpine-turnout/dist/alpine-turnout.umd.js" defer></script>
-<script src="./node_modules/alpinejs/dist/cdn.min.js" defer></script>
+npm run dev
 ```
 ----------
 
@@ -187,7 +177,6 @@ Because Turnout uses Alpine's visibility toggling, you can use standard transiti
      x-transition:leave.duration.0ms>
     ...
 </div>
-
 ```
 
 ----------
@@ -223,7 +212,6 @@ Since this is a Single Page Application (SPA) using the `History API`, your web 
 location / {
     try_files $uri $uri/ /index.html;
 }
-
 ```
 
 ### Example for Netlify:
@@ -234,7 +222,6 @@ Simply include a file named `netlify.toml` in the publish directory of your repo
   from = "/*"
   to = "/index.html"
   status = 200
-
 ```
 
 ----------
@@ -245,12 +232,9 @@ This project is tested using **Vitest** and **JSDOM**. Because Alpine.js initial
 
 To run the tests:
 
-Bash
-
-```
+```bash
 npm install
 npm test
-
 ```
 
 ### Test Cases
