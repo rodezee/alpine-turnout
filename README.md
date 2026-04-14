@@ -1,10 +1,12 @@
 # Alpine Turnout
 
-![Alpine Turnout Logo](https://alpine-turnout.netlify.app/alpine-turnout.png)
+![Alpine Turnout Logo](https://alpine-turnout.netlify.app/images/alpine-turnout.png)
 
 ## A lightweight, persistent tab-style switch for Alpine.js
 
 Unlike traditional routers that destroy and recreate DOM elements, **Alpine Turnout** treats your routes like railroad tracks. Every section stays in the DOM, preserving its internal state, while the "Turnout" guides the view and URL to the correct destination.
+
+----------
 
 ## Why Turnout?
 
@@ -24,9 +26,19 @@ Unlike traditional routers that destroy and recreate DOM elements, **Alpine Turn
     
 ----------
 
+## Kickstart
+
+### Turnout Playground Example 1
+[![Turnout Playground Example 1](https://alpine-turnout.netlify.app/images/playground-1.png)](https://turnout-playground.netlify.app/?code=PCFET0NUWVBFIGh0bWw-CjxodG1sPgo8aGVhZD4KICA8dGl0bGU-QWxwaW5lIFR1cm5vdXQ8L3RpdGxlPgogIDxzY3JpcHQgc3JjPSIvL3VucGtnLmNvbS9hbHBpbmUtdHVybm91dCIgZGVmZXI-PC9zY3JpcHQ-CiAgPHNjcmlwdCBzcmM9Ii8vdW5wa2cuY29tL2FscGluZWpzIiBkZWZlcj48L3NjcmlwdD4KPC9oZWFkPgo8Ym9keSB4LWRhdGE-CiAgPG5hdj4KICAgIDxhIGhyZWY9Ii8iPkFscGluZTwvYT4gfCAKICAgIDxhIGhyZWY9Ii90dXJub3V0Ij5UdXJub3V0PC9hPiB8CiAgICA8YiB4LXRleHQ9IiRzdG9yZS50dXJub3V0LnRpdGxlIj48L2I-CiAgPC9uYXY-CgogIDxkaXYgeC1yb3V0ZT0iLyIgeC10aXRsZT0iQWxwaW5lIEhvbWUiPgogICAgPHA-Q2xpY2sgdGhyb3VnaCB0aGUgbWVudS48L3A-CiAgPC9kaXY-CgogIDxkaXYgeC1yb3V0ZT0iL3R1cm5vdXQiIHgtdGl0bGU9IlR1cm5vdXQgUm91dGUiPgogICAgPHA-V2UganVzdCB0dXJuZWQgb3V0IHRvIGJlIGhlcmUuPC9wPgogIDwvZGl2Pgo8L2JvZHk-CjwvaHRtbD4)
+
+### Turnout Playground Example 2
+[![Turnout Playground Example 2](https://alpine-turnout.netlify.app/images/playground-2.png)](https://turnout-playground.netlify.app/?code=PCFET0NUWVBFIGh0bWw-CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ-CiAgICA8bWV0YSBjaGFyc2V0PSJVVEYtOCI-CiAgICA8dGl0bGU-QWxwaW5lIFR1cm5vdXQ8L3RpdGxlPgogICAgPHNjcmlwdCBzcmM9Ii8vdW5wa2cuY29tL2FscGluZS10dXJub3V0IiBkZWZlcj48L3NjcmlwdD4KICAgIDxzY3JpcHQgc3JjPSIvL3VucGtnLmNvbS9hbHBpbmVqcyIgZGVmZXI-PC9zY3JpcHQ-CiAgICA8bGluayByZWw9InN0eWxlc2hlZXQiIGhyZWY9Ii8vdW5wa2cuY29tL0BwaWNvY3NzL3BpY28iPgo8L2hlYWQ-Cjxib2R5IGNsYXNzPSJjb250YWluZXIiIHgtZGF0YT4KCiAgICA8aDEgeC1kYXRhIHgtdGV4dD0iJHN0b3JlLnR1cm5vdXQudGl0bGUiPjwvaDE-CgogICAgPG5hdj4KICAgICAgICA8dWw-CiAgICAgICAgICAgIDxsaT48YSBocmVmPSIvIj5Ib21lPC9hPjwvbGk-CiAgICAgICAgICAgIDxsaT48YSBocmVmPSIvdXNlci9qb2huIj5Qcm9maWxlPC9hPjwvbGk-CiAgICAgICAgICAgIDxsaT48YSBocmVmPSIvc2VhcmNoIj5TZWFyY2g8L2E-PC9saT4KICAgICAgICA8L3VsPgogICAgPC9uYXY-CgogICAgPGFydGljbGU-CiAgICAgICAgPGRpdiB4LXJvdXRlPSIvIiB4LXRpdGxlPSJXZWxjb21lIEhvbWUiIHgtdHJhbnNpdGlvbj4KICAgICAgICAgICAgPHA-VGhpcyBpcyB0aGUgaG9tZXBhZ2UuPC9wPgogICAgICAgIDwvZGl2PgoKICAgICAgICA8ZGl2IHgtcm91dGU9Ii91c2VyLzpuYW1lIiB4LXRpdGxlPSJVc2VyIFByb2ZpbGUiIHgtdHJhbnNpdGlvbj4KICAgICAgICAgICAgPHA-SGVsbG8sIDxzdHJvbmcgeC10ZXh0PSJuYW1lIj48L3N0cm9uZz4hPC9wPgogICAgICAgIDwvZGl2PgoKICAgICAgICA8ZGl2IHgtcm91dGU9Ii9zZWFyY2giIHgtdGl0bGU9IlNlYXJjaCIgeC10cmFuc2l0aW9uPgogICAgICAgICAgICA8ZGl2IHgtZGF0YT0ieyBxdWVyeTogJycgfSI-CiAgICAgICAgICAgICAgICA8aW5wdXQgdHlwZT0idGV4dCIgeC1tb2RlbD0icXVlcnkiIHBsYWNlaG9sZGVyPSJUeXBlIGhlcmUuLi4iPgogICAgICAgICAgICAgICAgPHA-WW91ciBpbnB1dCBpcyBwcmVzZXJ2ZWQgZXZlbiBpZiB5b3Ugc3dpdGNoIHRhYnMhPC9wPgogICAgICAgICAgICA8L2Rpdj4KICAgICAgICA8L2Rpdj4KICAgIDwvYXJ0aWNsZT4KCjwvYm9keT4KPC9odG1sPg)
+
+----------
+
 ## Installation
 
-### Via CDN
+### Via CDN (recommended)
 
 Include the script before Alpine.js:
 
@@ -62,7 +74,7 @@ npm run dev
 
 ## Usage
 
-### 1. Define your Tracks(/Routes)
+### 1. Define your tracks(/routes)
 
 Create a `nice` layout in `html`. Then use the `x-route` and `x-title` directives:
 

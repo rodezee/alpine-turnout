@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>demo</title>
+<script src="https://unpkg.com/alpine-turnout" defer></script>
+<script src="https://unpkg.com/alpinejs"></script>
+</head>
+<body x-data>
+  <h1 x-text="$store.turnout.title"></h1>
+  <a href="/alpine">alpine</a>
+  <a href="/turnout">turnout</a>
+  <div x-route="/alpine" x-title="Alpine">Alpine</div>
+  <div x-route="/turnout">Turnout</div>
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Alpine Turnout</title>
+  <script src="https://unpkg.com/alpine-turnout" defer></script>
+  <script src="https://unpkg.com/alpinejs" defer></script>
+</head>
+<body x-data>
+  <nav>
+    <a href="/">Home</a> | 
+    <a href="/turnout">Turnout Demo</a>
+  </nav>
+
+  <div x-route="/" x-title="Home">
+    <h1>Welcome to Alpine</h1>
+    <p>This is the default route.</p>
+  </div>
+
+  <div x-route="/turnout" x-title="Turnout Page">
+    <h1>Turnout Active!</h1>
+    <p>Notice how the URL stays clean in the playground.</p>
+  </div>
+</body>
+</html>
