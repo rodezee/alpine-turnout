@@ -148,14 +148,14 @@ describe('Alpine Turnout (Persistent Tab Router)', () => {
     extLink.remove();
   });
   
-  it('triggers x-active when a route becomes active', async () => {
+  it('triggers x-arrive when a route becomes active', async () => {
     // 1. Define a global spy
     window.onArrival = vi.fn();
 
-    // 2. Inject HTML with x-active
+    // 2. Inject HTML with x-arrive
     document.body.innerHTML = `
       <div x-data="{ load() { window.onArrival() } }">
-        <div x-route="/arrival" x-active="load()" id="arrival">Arrival</div>
+        <div x-route="/arrival" x-arrive="load()" id="arrival">Arrival</div>
       </div>
     `;
     Alpine.initTree(document.body);

@@ -134,8 +134,8 @@ export default function (Alpine) {
         });
     });
 
-    // 2.5 x-active Directive (Entry)
-    Alpine.directive('active', (el, { expression }, { evaluateLater, effect }) => {
+    // 2.5 x-arrive Directive (Entry)
+    Alpine.directive('arrive', (el, { expression }, { evaluateLater, effect }) => {
         const evaluate = evaluateLater(expression);
         effect(() => {
             if (Alpine.evaluate(el, '_active')) {
