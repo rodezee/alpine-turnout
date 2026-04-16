@@ -56,7 +56,7 @@
     </aside>
 
     <main class="container">
-        <div x-route="/" x-title="Welcome Home" x-transition.duration.1000ms x-transition:leave.duration.0ms>
+        <div x-route="/" x-title="Welcome Home" x-active="console.log('Hi Home')" x-leave="console.log('By Home')" x-transition.duration.1000ms x-transition:leave.duration.0ms>
             <section>
                 <p>The turnout guided you home!</p>
             </section>
@@ -66,7 +66,8 @@
              x-title="Live Weather" 
              x-transition.opacity.duration.1000ms 
              x-transition:leave.duration.0ms
-             x-effect="if (_active) console.log('Weather route active'); else console.log('Weather route inactive');">
+             x-active="console.log('Weather route active');"
+             x-leave="console.log('Weather route leave')">
             <article x-data="{
                 city: '',
                 weather: null,
@@ -104,7 +105,7 @@
         <div x-route="/about" x-title="About Turnout" x-transition x-transition:leave.duration.0ms>
             <section>
                 <p>Alpine Turnout: Persistent routing for simple apps.</p>
-                <p><img src="https://alpine-turnout.netlify.app/alpine-turnout.png"></p>
+                <p><img src="https://alpine-turnout.netlify.app/images/alpine-turnout.png"></p>
             </section>
         </div>
 

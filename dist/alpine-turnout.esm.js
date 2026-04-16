@@ -61,6 +61,16 @@ function e(e) {
 			}
 			o ? (a._active = !0, Object.assign(a, o.groups), i && (e.store("turnout").title = i, document.title = i)) : a._active = !1;
 		});
+	}), e.directive("active", (t, { expression: n }, { evaluateLater: r, effect: i }) => {
+		let a = r(n);
+		i(() => {
+			e.evaluate(t, "_active") && e.nextTick(() => a());
+		});
+	}), e.directive("leave", (t, { expression: n }, { evaluateLater: r, effect: i }) => {
+		let a = r(n), o = !0;
+		i(() => {
+			!e.evaluate(t, "_active") && !o && a(), o = !1;
+		});
 	}), window.addEventListener("click", (t) => {
 		let n = t.target.closest("a");
 		if (!n) return;

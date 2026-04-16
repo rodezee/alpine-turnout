@@ -5,7 +5,7 @@ export default function (Alpine) {
         registeredRoutes: new Set(),
         notFound: false,
         isPopState: false,
-        scrollCache: {}, // Stores { '/path': scrollY }
+        scrollCache: {}, 
 
         init() {
             window.addEventListener('popstate', () => {
@@ -17,7 +17,6 @@ export default function (Alpine) {
 
         go(path) {
             const [cleanPath, hash] = path.split('#');
-            
             this.scrollCache[this.path] = window.scrollY;
 
             if (this.path !== cleanPath) {
@@ -50,12 +49,9 @@ export default function (Alpine) {
             if (hash) {
                 this.scrollToHash(hash);
             } else if (this.isPopState) {
-                // Let the browser handle native back/forward scroll
+                // Browser handles back
             } else {
-                // Return to cached position if it exists, otherwise top
                 const savedScroll = this.scrollCache[this.path] || 0;
-                
-                // We use nextTick to ensure the route is visible before scrolling
                 Alpine.nextTick(() => {
                     window.scrollTo({ left: 0, top: savedScroll, behavior: 'smooth' });
                 });
@@ -96,7 +92,7 @@ export default function (Alpine) {
         }
     });
 
-    // 2. Register the Directive
+    // 2. x-route Directive
     Alpine.directive('route', (el, { }, { effect }) => {
         const pathPattern = el.getAttribute('x-route');
         const routeTitle = el.getAttribute('x-title') || "";
@@ -138,13 +134,39 @@ export default function (Alpine) {
         });
     });
 
+    // 2.5 x-active Directive (Entry)
+    Alpine.directive('active', (el, { expression }, { evaluateLater, effect }) => {
+        const evaluate = evaluateLater(expression);
+        effect(() => {
+            if (Alpine.evaluate(el, '_active')) {
+                Alpine.nextTick(() => evaluate());
+            }
+        });
+    });
+
+    // NEW: 2.6 x-leave Directive (Exit)
+    Alpine.directive('leave', (el, { expression }, { evaluateLater, effect }) => {
+        const evaluate = evaluateLater(expression);
+        let firstRun = true;
+
+        effect(() => {
+            const active = Alpine.evaluate(el, '_active');
+            
+            // We only want to trigger 'leave' if it WAS active and now isn't.
+            // We skip the first run to avoid triggering it on page load.
+            if (!active && !firstRun) {
+                evaluate();
+            }
+            
+            firstRun = false;
+        });
+    });
+
     // 3. Global Click Interceptor
     window.addEventListener('click', e => {
         const link = e.target.closest('a');
         if (!link) return;
         const href = link.getAttribute('href');
-
-        // Allow external links, blank targets, and simple #hash jumps (without path)
         if (!href || href.startsWith('#') || link.target === '_blank' || !href.startsWith('/')) return;
         
         e.preventDefault();

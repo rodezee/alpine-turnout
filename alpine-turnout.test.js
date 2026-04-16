@@ -147,4 +147,53 @@ describe('Alpine Turnout (Persistent Tab Router)', () => {
     expect(spy).not.toHaveBeenCalled();
     extLink.remove();
   });
+  
+  it('triggers x-active when a route becomes active', async () => {
+    // 1. Define a global spy
+    window.onArrival = vi.fn();
+
+    // 2. Inject HTML with x-active
+    document.body.innerHTML = `
+      <div x-data="{ load() { window.onArrival() } }">
+        <div x-route="/arrival" x-active="load()" id="arrival">Arrival</div>
+      </div>
+    `;
+    Alpine.initTree(document.body);
+
+    // 3. Navigate to the route
+    Alpine.store('turnout').go('/arrival');
+
+    await waitFor(() => {
+      expect(window.onArrival).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  it('triggers x-leave when moving away from a route', async () => {
+    // 1. Define global spies
+    window.onDeparture = vi.fn();
+
+    // 2. Inject HTML with x-leave
+    document.body.innerHTML = `
+      <div x-data="{ cleanup() { window.onDeparture() } }">
+        <div x-route="/station-a" id="a">Station A</div>
+        <div x-route="/station-b" x-leave="cleanup()" id="b">Station B</div>
+      </div>
+    `;
+    Alpine.initTree(document.body);
+
+    // 3. Start at Station B (the route we want to leave)
+    Alpine.store('turnout').go('/station-b');
+    
+    await waitFor(() => {
+        expect(document.getElementById('b').style.display).not.toBe('none');
+    });
+
+    // 4. Navigate to Station A
+    Alpine.store('turnout').go('/station-a');
+
+    await waitFor(() => {
+      expect(document.getElementById('b').style.display).toBe('none');
+      expect(window.onDeparture).toHaveBeenCalledTimes(1);
+    });
+  });  
 });

@@ -1,6 +1,6 @@
 # Alpine Turnout
 
-![Alpine Turnout Logo](https://alpine-turnout.netlify.app/images/alpine-turnout.png)
+[![Alpine Turnout Logo](https://alpine-turnout.netlify.app/images/alpine-turnout.png)](https://turnout-playground.netlify.app/)
 
 ## A lightweight, persistent tab-style switch for Alpine.js
 
@@ -163,25 +163,76 @@ Property | Type | Description
 `notFound` | `Boolean` | True if the current path matches no registered routes.
 `go(path)` | `Function` | Programmatically navigate to a new route.
 
-### Directive: `x-route`
+### Directives
 
-Used on a `div` or `section` to define a "track".
+#### x-route="[path]"
 
--   **Static Routes:** `x-route="/about"`
+Used on a `div` or `section` to define a "track". Elements with this directive are automatically toggled based on the URL.
+
+- **Static Routes:** `x-route="/about"`
     
--   **Dynamic Routes:** `x-route="/post/:id"` (makes `id` available in local scope).
+- **Dynamic Routes:** `x-route="/post/:id"` (makes `id` available in local scope).
     
--   **Wildcard (Custom 404):** `x-route="*"`
-    
+- **Wildcard (Custom 404):** `x-route="*"`
+
+
+#### x-active="[expression]"
+
+The "Arrival" hook. Fires every time the route becomes active.
+
+- Use this to fetch fresh data or reset a form when the user navigates to the page.
+
+- Example: x-active="getWeather()"
+
+
+#### x-leave="[expression]"
+
+The "Departure" hook. Fires when the user navigates away from this route.
+
+- Use this to stop timers, cancel requests, or save draft data.
+
+- Example: x-leave="stopAutoRefresh()"
+
 ----------
 
-## Default 404 Behavior
+### Features & Behavior
+
+
+#### 📜 Scroll Memory
+
+Alpine Turnout automatically remembers the scroll position of every route.
+
+- When navigating via links, it returns you to your previous scroll depth on that specific "track".
+
+- When clicking a new unique path for the first time, it defaults to the top (0,0) with a smooth behavior.
+
+
+#### ⚓ Anchor Support (#hash)
+
+The router detects fragment identifiers. If a URL contains a #, the router will:
+
+- Resolve the correct x-route.
+
+- Wait for the DOM to render.
+
+- Smoothly scroll the element with the matching id into view.
+
+
+#### 🛰️ Link Interception
+
+Standard `<a>` tags are intercepted automatically if they point to an internal path (starting with /).
+
+- Internal links: Trigger an Alpine Turnout "switch" without a page reload.
+
+- External/Hash-only links: Ignored by the router, allowing standard browser behavior.
+
+
+#### Default 404 Behavior
 
 If no `x-route="*"` is found and the user hits an unregistered path, Turnout automatically injects a "Dead End" 404 section into your `main` element to prevent a blank screen.
 
-----------
 
-## Transitions
+#### Transitions
 
 Because Turnout uses Alpine's visibility toggling, you can use standard transitions. Note that we recommend setting a `leave.duration.0ms` if you want the "old" page to disappear instantly while the new one fades in.
 
