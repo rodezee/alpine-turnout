@@ -2,9 +2,13 @@
 
 [![Alpine Turnout Logo](https://alpine-turnout.netlify.app/images/alpine-turnout.png)](https://turnout-playground.netlify.app/)
 
-## A lightweight, persistent tab-style switch for Alpine.js
+## A lightweight **SPA Switch** for **Alpine.js** built for speed and **state persistence**.
 
-Unlike traditional routers that destroy and recreate DOM elements, **Alpine Turnout** treats your routes like railroad tracks. Every section stays in the DOM, preserving its internal state, while the "Turnout" guides the view and URL to the correct destination.
+Unlike traditional routers that destroy and recreate DOM elements on every navigation, **Alpine Turnout** focuses on **DOM preservation**.
+
+It treats your routes like railroad tracks: every section stays "alive" in the DOM. This preserves the internal state—meaning **input fields, scroll positions, and component variables remain exactly as the user left them**—while the "Turnout" logic reactively switches the view and URL to the correct destination.
+
+[![Persistent Switch](https://turnout-playground.netlify.app/persistent-switch.gif)](https://turnout-playground.netlify.app/)
 
 ## Why Turnout?
 
