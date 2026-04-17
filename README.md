@@ -1,3 +1,11 @@
+<div align="center">
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Gzipped Size](https://img.shields.io/badge/gzipped-1.37_kB-blue)](https://github.com/rodezee/alpine-turnout)
+[![Version](https://img.shields.io/badge/version-1.2.4-green)](https://github.com/rodezee/alpine-turnout)
+[![Alpine.js](https://img.shields.io/badge/Alpine.js-Compatible-orange)](https://alpinejs.dev/)
+
+</div>
 # Alpine Turnout
 
 [![Alpine Turnout Logo](https://alpine-turnout.netlify.app/images/alpine-turnout.png)](https://alpine-turnout.netlify.app/)
