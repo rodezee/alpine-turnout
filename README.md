@@ -10,22 +10,44 @@ It treats your routes like railroad tracks: every section stays "alive" in the D
 
 [![Persistent Switch](images/persistent-switch.gif)](https://turnout-playground.netlify.app/)
 
-## Why Turnout?
 
--   **Zero-Config:** just setup your `html` layout like normally and use the `x-route` attribute to declare the "tracks".
+### Why Turnout?
 
--   **Persistence:** Forms, scroll positions, and component data are preserved when navigating away and back.
+-   🛤️ **Zero-Config:** Set up your HTML layout normally and use the `x-route` directive to declare your "tracks." No complex routing manifests required.
     
--   **Instant Switching:** No re-mounting or re-fetching logic on every click.
+-   💾 **State Persistence:** Forms, scroll positions, and component data are preserved. When you navigate away and back, everything is exactly where you left it.
     
--   **Alpine-Native:** Uses a global store and works with a single directive.
+-   ⚡ **Instant Switching:** No re-mounting or re-fetching logic on every click. It’s the fastest way to navigate an Alpine app.
     
--   **Transitions:** Works seamlessly with Alpine's `x-transition`.
+-   🍦 **Alpine-Native:** Built specifically for the Alpine ecosystem. It uses a global store and works with a single declarative directive.
+    
+-   🎬 **Seamless Transitions:** Works out-of-the-box with Alpine's built-in `x-transition` for smooth UI entries and exits.
+    
+-   🪶 **Ultra-Lightweight:** The entire library is only **3.00 kB**. High performance with zero bloat.
+    
+-   🔍 **SEO Ready:** Since your content lives in the DOM, it remains fully indexable by search engines like Google and DuckDuckGo.
 
--   **Super Small** The alpine-turnout code is only 2.00 kB (gzip: 0.94 kB)
+### Example Code Snippet
 
--   **SEO Proof:** All your content gets indexed by the popular search engines like `Google`, `DuckDuckGo` etc.
-    
+```html
+<div x-data>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/user/123">User Profile</a>
+    </nav>
+
+    <section x-route="/">
+        <h1>Welcome Home</h1>
+        <input type="text" placeholder="I stay alive!">
+    </section>
+
+    <section x-route="/user/:id">
+        <h1 x-text="'User Profile: ' + id"></h1>
+    </section>
+</div>
+```
+No config, just your Alpine.js HTML as you are used to. Add a `x-route` = `/user/:id` attribute and have your `id` directly available!
+
 ----------
 
 ## Kickstart
