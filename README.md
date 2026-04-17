@@ -8,7 +8,7 @@ Unlike traditional routers that destroy and recreate DOM elements on every navig
 
 It treats your routes like railroad tracks: every section stays "alive" in the DOM. This preserves the internal state—meaning **input fields, scroll positions, and component variables remain exactly as the user left them**—while the "Turnout" logic reactively switches the view and URL to the correct destination.
 
-[![Persistent Switch](https://turnout-playground.netlify.app/persistent-switch.gif?v=1)](https://turnout-playground.netlify.app/)
+[![Persistent Switch](images/persistent-switch.gif)](https://turnout-playground.netlify.app/)
 
 ## Why Turnout?
 
