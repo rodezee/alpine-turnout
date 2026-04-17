@@ -6,8 +6,6 @@
 
 Unlike traditional routers that destroy and recreate DOM elements, **Alpine Turnout** treats your routes like railroad tracks. Every section stays in the DOM, preserving its internal state, while the "Turnout" guides the view and URL to the correct destination.
 
-----------
-
 ## Why Turnout?
 
 -   **Zero-Config:** just setup your `html` layout like normally and use the `x-route` attribute to declare the "tracks".

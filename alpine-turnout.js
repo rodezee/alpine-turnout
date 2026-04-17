@@ -25,6 +25,7 @@ export default function (Alpine) {
                 this.update();
             } else if (hash) {
                 this.scrollToHash(hash);
+                history.pushState(null, '', path);
             }
         },
 
@@ -166,8 +167,15 @@ export default function (Alpine) {
     window.addEventListener('click', e => {
         const link = e.target.closest('a');
         if (!link) return;
-        const href = link.getAttribute('href');
-        if (!href || href.startsWith('#') || link.target === '_blank' || !href.startsWith('/')) return;
+        
+        let href = link.getAttribute('href');
+        if (!href || link.target === '_blank') return;
+
+        // Use window.location.pathname on hash only paths
+        if (href.startsWith('#')) href = window.location.pathname + href;
+        
+        // Only intercept internal absolute paths
+        if (!href.startsWith('/')) return;
         
         e.preventDefault();
         Alpine.store('turnout').go(href);
