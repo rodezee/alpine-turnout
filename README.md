@@ -248,11 +248,11 @@ The router detects fragment identifiers. If a URL contains a #, the router will:
 
 #### 🛰️ Link Interception
 
-Standard `<a>` tags are intercepted automatically if they point to an internal path (starting with /).
+`<a>` tags are intercepted automatically if they point to an internal path (starting with /).
 
 - Internal links: Trigger an Alpine Turnout "switch" without a page reload.
 
-- External/Hash-only links: Ignored by the router, allowing standard browser behavior.
+- External links: Ignored by the router, allowing standard browser behavior.
 
 
 #### Default 404 Behavior
@@ -347,6 +347,10 @@ Our suite covers the following test cases:
 - intercepts internal links and prevents default behavior
 
 - ignores external links and allows standard navigation
+
+- triggers x-arrive when a route becomes active
+
+- triggers x-leave when moving away from a route
 
 ----------
 
