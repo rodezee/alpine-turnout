@@ -14,7 +14,7 @@ function e(e) {
 		},
 		go(e) {
 			let [t, n] = e.split("#");
-			this.scrollCache[this.path] = window.scrollY, this.path === t ? n && this.scrollToHash(n) : (this.isPopState = !1, history.pushState(null, "", e), this.update());
+			this.scrollCache[this.path] = window.scrollY, this.path === t ? n && (this.scrollToHash(n), history.pushState(null, "", e)) : (this.isPopState = !1, history.pushState(null, "", e), this.update());
 		},
 		update() {
 			this.isPopState || (this.scrollCache[this.path] = window.scrollY), this.path = window.location.pathname, this.notFound = !Array.from(this.registeredRoutes).some((e) => {
@@ -75,7 +75,7 @@ function e(e) {
 		let n = t.target.closest("a");
 		if (!n) return;
 		let r = n.getAttribute("href");
-		!r || r.startsWith("#") || n.target === "_blank" || !r.startsWith("/") || (t.preventDefault(), e.store("turnout").go(r));
+		!r || n.target === "_blank" || (r.startsWith("#") && (r = window.location.pathname + r), r.startsWith("/") && (t.preventDefault(), e.store("turnout").go(r)));
 	});
 }
 //#endregion

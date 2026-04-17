@@ -23,7 +23,7 @@ It treats your routes like railroad tracks: every section stays "alive" in the D
     
 -   🎬 **Seamless Transitions:** Works out-of-the-box with Alpine's built-in `x-transition` for smooth UI entries and exits.
     
--   🪶 **Ultra-Lightweight:** The entire library is only **3.00 kB**. High performance with zero bloat.
+-   🪶 **Ultra-Lightweight:** The entire library is only **3 kB**. High performance with zero bloat.
     
 -   🔍 **SEO Ready:** Since your content lives in the DOM, it remains fully indexable by search engines like Google and DuckDuckGo.
 
