@@ -75,7 +75,7 @@ No config, just your Alpine.js HTML as you are used to. Add a `x-route` = `/user
 
 ## Installation
 
-### Via CDN (recommended)
+### Via CDN (recommanded)
 
 Include the script before Alpine.js:
 
